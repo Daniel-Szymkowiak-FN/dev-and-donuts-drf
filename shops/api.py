@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 # Models
-from .models import Shop
+from .models import Shop, Donut
 from .serializers import ShopSerializer, DonutSerializer
 
 
@@ -26,6 +26,13 @@ class DonutAPIView(APIView):
 
     def get(self, request):
         """List all donuts of a user"""
-        donut_queryset = Shop.objects.filter(user=self.request.user)
+        donut_queryset = Donut.objects.filter(name__startswith="Stra")
         serializer = DonutSerializer(donut_queryset, many=True)
         return Response(status=status.HTTP_200_OK, data=serializer.data)
+
+    def post(self, request):
+        """Create a donut"""
+        serializer = DonutSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(status=status.HTTP_201_CREATED, data=serializer.data)

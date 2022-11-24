@@ -19,3 +19,4 @@ class DonutSerializer(serializers.ModelSerializer):
     class Meta:
         model = Donut
         fields = "__all__"
+        # exclude = ["last_updated"]

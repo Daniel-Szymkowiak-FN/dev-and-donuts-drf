@@ -11,7 +11,6 @@ class Shop(models.Model):
     )
     name = models.CharField(max_length=255, blank=True, default="")
     added = models.DateTimeField(auto_now_add=True)
-    last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.pk) + " - " + self.name
@@ -45,3 +44,4 @@ class Donut(models.Model):
     )
     name = models.CharField(max_length=255, blank=True, default="")
     frosting = models.CharField(max_length=255, choices=FROSTING, default=FROSTING__NONE)
+    last_updated = models.DateTimeField(auto_now=True)
