@@ -42,7 +42,7 @@ class DonutSerializer(serializers.ModelSerializer):
         fields = "__all__"
         # exclude = ["last_updated"]
 
-3 ----------------
+# 3 ----------------
 
 # import Donut
 # import DonutSerializer
@@ -51,12 +51,6 @@ class DonutAPIView(APIView):
     allowed_methods = ["GET", "POST"]
     permission_classes = [IsAuthenticated]
 
-    def get(self, request):
-        """List all donuts of a user"""
-        donut_queryset = Donut.objects.filter(shop__user=self.request.user)
-        serializer = DonutSerializer(donut_queryset, many=True)
-        return Response(status=status.HTTP_200_OK, data=serializer.data)
-
     def post(self, request):
         """Create a donut"""
         serializer = DonutSerializer(data=request.data)
@@ -64,13 +58,20 @@ class DonutAPIView(APIView):
         serializer.save()
         return Response(status=status.HTTP_201_CREATED, data=serializer.data)
 
+    def get(self, request):
+        """List all donuts of a user"""
+        donut_queryset = Donut.objects.filter(shop__user=self.request.user)
+        serializer = DonutSerializer(donut_queryset, many=True)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
+
 # 4 ----------------
 
 # import DonutAPIView
 
 path("donut/", DonutAPIView.as_view(), name="donut"),
 
-5 ----------------
+# 5 ----------------
+# ADMIN
 
 # import Donut
 
