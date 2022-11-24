@@ -1,6 +1,5 @@
 # Django
 from django.db import models
-from django.utils.translation import gettext as _
 
 
 class Shop(models.Model):
@@ -24,24 +23,3 @@ class Shop(models.Model):
     def save(self, *args, **kwargs):
         self.full_clean()
         return super().save(*args, **kwargs)
-
-
-class Donut(models.Model):
-    FROSTING__NONE = "none"
-    FROSTING__VANILLA = "vanilla"
-    FROSTING__CHOCOLATE = "chocolate"
-    FROSTING__STRAWBERRY = "strawberry"
-    FROSTING = [
-        (FROSTING__NONE, _("none")),
-        (FROSTING__VANILLA, _("vanilla")),
-        (FROSTING__CHOCOLATE, _("chocolate")),
-        (FROSTING__STRAWBERRY, _("strawberry")),
-    ]
-    shop = models.ForeignKey(
-        "shops.Shop",
-        related_name="donut_shop",
-        on_delete=models.CASCADE,
-    )
-    name = models.CharField(max_length=255, blank=True, default="")
-    frosting = models.CharField(max_length=255, choices=FROSTING, default=FROSTING__NONE)
-    last_updated = models.DateTimeField(auto_now=True)
